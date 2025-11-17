@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landslide Risk Assessment</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        :root {
+            /* Brand palette */
+            --brand-brown: #5D473A;
+            --brand-red: #D72638;
+            --brand-green: #2E8B57;
+            --bg-light: #F5F5F5;
+            --text-dark: #333333;
+            --accent-yellow: #FFCC00;
+            --accent-blue: #00AEEF;
+
+            /* App theme tokens mapped to brand palette */
+            --primary-color: var(--brand-green);
+            --secondary-color: var(--accent-blue);
+            --accent-color: var(--accent-yellow);
+            --dark-color: var(--text-dark);
+            --light-color: var(--bg-light);
+        }
+
+        body {
+            min-height: 100vh;
+            /* Modern earthy-to-clean gradient overlay using new palette */
+            background: linear-gradient(135deg, rgba(93, 71, 58, 0.92), rgba(0, 174, 239, 0.88)),
+                        url("/api/placeholder/1920/1080") center/cover fixed;
+            padding: 2rem 1rem;
+            color: var(--dark-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container-heading {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .heading_font {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .ml-container {
+            background: rgba(245, 245, 245, 0.98); /* aligns with #F5F5F5 */
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        h3 {
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.25); /* green focus glow */
+        }
+
+        input::placeholder {
+            color: #9e9e9e;
+        }
+
+        #sub {
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto 0;
+            display: block;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #sub:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .info-tooltip {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            width: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 100%;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container-heading {
+                margin-top: 3rem;
+            }
+            
+            .heading_font {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <div class="container">
+        <div class="container-heading">
+            <h2 class='heading_font'>Landslide Risk Assessment</h2>
+            <p style="color: white; margin-top: 1rem;">Enter geological and environmental parameters for analysis</p>
+        </div>
+
+        <div class="ml-container">
+            <form action="{{ url_for('predict') }}" method="POST">
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <h3>Rainfall (mm)</h3>
+                        <input type="text" name="rainfall" placeholder="e.g., 150" required>
+                        <div class="info-tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Amount of rainfall in millimeters</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Temperature (°C)</h3>
+                        <input type="text" name="temperature" placeholder="e.g., 30" required>
+                        <div class="info-tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Temperature in degrees Celsius</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Soil Moisture (%)</h3>
+                        <input type="text" name="soil_moisture" placeholder="e.g., 70" required>
+                        <div class="info-tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Soil moisture content percentage</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Slope Angle (degrees)</h3>
+                        <input type="text" name="slope" placeholder="e.g., 25" required>
+                        <div class="info-tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Angle of the slope in degrees</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Humidity (%)</h3>
+                        <input type="text" name="humidity" placeholder="e.g., 85" required>
+                        <div class="info-tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Relative humidity percentage</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button id="sub" type="submit">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Risk
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Landslide Prediction System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto", sans-serif;
+        }
+
+        :root {
+            /* Modern palette */
+            --brand-brown: #5D473A;
+            --primary-color: #2E8B57;    /* green */
+            --secondary-color: #00AEEF;  /* blue */
+            --accent-color: #FFCC00;     /* yellow */
+            --dark-color: #333333;       /* text */
+            --light-color: #F5F5F5;      /* backgrounds */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: rgba(224, 224, 224, 0.048);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: var(--brand-brown);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .topNav {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 0;
+        }
+
+        nav .bottomNav {
+            padding: 16px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: var(--accent-color);
+        }
+
+        .main {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(93, 71, 58, 0.92), rgba(0, 174, 239, 0.88)),
+                        url("/api/placeholder/1920/1080") center/cover;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .main .container {
+            color: white;
+            text-align: center;
+        }
+
+        .main h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+           
+        }
+
+        .main p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+           
+        }
+
+        .services {
+            padding: 100px 0;
+            background: var(--light-color);
+        }
+
+        .services .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding-top: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .cardBg {
+            height: 200px;
+            background: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cardBg::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+           
+            opacity: 0.8;
+        }
+
+        .cardInfo {
+            padding: 25px;
+        }
+
+        .cardInfo h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .featureCard {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .featureCard:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .featureCard:hover p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .clients {
+            background: var(--primary-color);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .numbers h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 80px 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="bottomNav">
+            <div class="container">
+                <div class="logo">
+                    <h1 style="color: white;">LandSlide<span style="color: var(--accent-color)">Guard</span></h1>
+                </div>
+                <div class="menu">
+                    <a href="#/">Home</a>
+                    <a href="#/">About Us</a>
+                    <a href="/register">Register</a>
+                    <a href="/login">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main">
+        <div class="container">
+            <h1>Advanced Landslide Prediction System</h1>
+            <p>Leveraging cutting-edge AI and geological data analysis to predict and prevent landslide disasters.<br>
+            Protecting communities through early warning and risk assessment.</p>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="title" style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-size: 2.5rem; color: var(--dark-color);">Our Core Services</h2>
+            <p style="color: var(--primary-color);">Advanced solutions for landslide prediction and prevention</p>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="cardBg" style="background: url('/static/the-future-is-now-real-time-monitoring-and-its-implications.webp') center/cover no-repeat;"></div>
+                <div class="cardInfo">
+                    <h3>Real-time Monitoring</h3>
+                    <p>24/7 surveillance of geological conditions using advanced sensors and satellite data for immediate threat detection.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="cardBg" style="background: url('/static/risk_assessment_topic-1024x790-1.jpg') center/cover no-repeat;"></div>
+                <div class="cardInfo">
+                    <h3>Risk Assessment</h3>
+                    <p>Comprehensive analysis of terrain stability, soil conditions, and historical data to identify high-risk areas.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="cardBg" style="background: url(/static/android-hero.jpg)center/cover no-repeat;"></div>
+                <div class="cardInfo">
+                    <h3>Early Warning System</h3>
+                    <p>Automated alert system providing timely notifications to authorities and residents in potentially affected areas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="title" style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-size: 2.5rem; color: var(--dark-color);">Advanced Features</h2>
+            <p style="color: var(--primary-color);">Cutting-edge technology for precise predictions</p>
+        </div>
+        <div class="container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div class="featureCard">
+                <div class="heading">
+                    <i class="fas fa-satellite" style="font-size: 2rem; margin-bottom: 15px; color: var(--accent-color);"></i>
+                    <h3>Satellite Integration</h3>
+                </div>
+                <p>Real-time satellite data analysis for comprehensive terrain monitoring.</p>
+            </div>
+            <div class="featureCard">
+                <div class="heading">
+                    <i class="fas fa-brain" style="font-size: 2rem; margin-bottom: 15px; color: var(--accent-color);"></i>
+                    <h3>AI Prediction Models</h3>
+                </div>
+                <p>Advanced machine learning algorithms for accurate risk assessment.</p>
+            </div>
+            <div class="featureCard">
+                <div class="heading">
+                    <i class="fas fa-database" style="font-size: 2rem; margin-bottom: 15px; color: var(--accent-color);"></i>
+                    <h3>Big Data Analytics</h3>
+                </div>
+                <p>Processing vast amounts of geological and environmental data.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="clients">
+        <div class="container" style="text-align: center;">
+            <div class="numbers">
+                <h2>98.5%</h2>
+                <p>Prediction Accuracy</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center;">
+                <h2>Stay Connected</h2>
+                <p style="margin: 20px 0;">Subscribe to our newsletter for updates and alerts</p>
+                <div style="max-width: 400px; margin: 0 auto;">
+                    <input type="email" placeholder="Enter your email" 
+                           style="padding: 10px; width: 70%; border: none; border-radius: 5px 0 0 5px;">
+                    <button style="padding: 10px 20px; background: var(--accent-color); border: none; color: white; border-radius: 0 5px 5px 0; cursor: pointer;">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
