@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <title>Login - LandSlideGuard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #63b3ed;
+            --accent-color: #f6ad55;
+            --dark-color: #2d3748;
+            --light-color: #f7fafc;
+            --error-color: #e53e3e;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(44, 82, 130, 0.95), rgba(99, 179, 237, 0.9)),
+                        url("/api/placeholder/1920/1080") center/cover fixed;
+        }
+
+        #user-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            
+        }
+
+        .form-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-item label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.2);
+        }
+
+        #form-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #form-submit:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        #remember-me {
+            margin-right: 0.5rem;
+        }
+
+        #error-msg {
+            color: var(--error-color);
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background: rgba(229, 62, 62, 0.1);
+        }
+
+        #switch-form {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .text-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .text-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-section h1 {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-section span {
+            color: var(--accent-color);
+        }
+
+        .logo-section p {
+            color: var(--dark-color);
+            font-size: 0.875rem;
+        }
+
+        /* Custom checkbox styling */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            accent-color: var(--primary-color);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+    <form id="user-form" action="/login" method="post">
+        <div class="logo-section">
+         
+            <p>Access your prediction dashboard</p>
+        </div>
+
+        <div class="form-item">
+            <label for="user-username">Username</label>
+            <input 
+                id="user-username" 
+                class="form-input" 
+                type="text" 
+                name="username" 
+                required
+                placeholder="Enter your username"
+            >
+        </div>
+
+        <div class="form-item">
+            <label for="user-password">Password</label>
+            <input 
+                id="user-password" 
+                class="form-input" 
+                type="password" 
+                name="password" 
+                required
+                placeholder="Enter your password"
+            >
+        </div>
+
+        <div class="form-item checkbox-wrapper">
+            <input type="checkbox" id="remember-me" name="remember-me">
+            <label for="remember-me">Remember me</label>
+        </div>
+
+        {% if error %}
+        <p id="error-msg">
+            <i class="fas fa-exclamation-circle"></i>
+            {{error}}
+        </p>
+        {% endif %}
+
+        <input id="form-submit" type="submit" value="Login">
+
+        <div id="switch-form">
+            <p>Don't have an account? <a class="text-link" href="/register">Register</a></p>
+        </div>
+    </form>
+</body>
+</html>

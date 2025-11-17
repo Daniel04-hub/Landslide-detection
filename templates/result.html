@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landslide Risk Assessment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="overlay"></div>
+        <div class="container">
+            <form action="{{ url_for('predict')}}" method="post">
+                <h1 class="main-heading">
+                    <i class="fas fa-mountain"></i>
+                    Landslide Risk Assessment
+                </h1>
+                
+                <div class="results-card">
+                    {% if prediction == 0 %}
+                        <div class="risk-level high">
+                            <div class="icon-wrapper" style="font-size: 4rem; margin-bottom: 1rem;">
+                                <i class="fas fa-mountain" style="color: #D72638;"></i>
+                                <i class="fas fa-exclamation-triangle" style="color: #D72638; position: relative; left: -20px;"></i>
+                            </div>
+                            <h2>High Risk</h2>
+                            <p class="warning">Immediate action required!</p>
+                            <p>Confidence Level: {{ "%.2f"|format(confidence) }}%</p>
+                            <h3>Confidence Graph</h3>
+                            <img src="{{ url_for('static', filename=graph_filename) }}" alt="Confidence Graph" style="max-width: 600px; margin: 1rem auto; display: block;">
+                            <div class="alert-box" style="background: #FDECEE; border-left: 4px solid #D72638; padding: 1.5rem; margin-top: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #D72638; margin-bottom: 1rem;"><i class="fas fa-bell"></i> Emergency Alert</h4>
+                                <ul style="list-style: none; padding: 0; color: #333;">
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-arrow-right" style="color: #D72638;"></i> Evacuate to higher ground immediately</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-arrow-right" style="color: #D72638;"></i> Contact emergency services</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-arrow-right" style="color: #D72638;"></i> Avoid steep slopes and valleys</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-arrow-right" style="color: #D72638;"></i> Alert neighbors and family</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% elif prediction == 1 %}
+                        <div class="risk-level moderate">
+                            <div class="icon-wrapper" style="font-size: 4rem; margin-bottom: 1rem;">
+                                <i class="fas fa-mountain" style="color: #FFCC00;"></i>
+                                <i class="fas fa-exclamation-circle" style="color: #FFCC00; position: relative; left: -20px;"></i>
+                            </div>
+                            <h2>Moderate Risk</h2>
+                            <p class="warning">Caution advised</p>
+                            <p>Confidence Level: {{ "%.2f"|format(confidence) }}%</p>
+                            <h3>Confidence Graph</h3>
+                            <img src="{{ url_for('static', filename=graph_filename) }}" alt="Confidence Graph" style="max-width: 600px; margin: 1rem auto; display: block;">
+                            <div class="alert-box" style="background: #FFF8E1; border-left: 4px solid #FFCC00; padding: 1.5rem; margin-top: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #FFCC00; margin-bottom: 1rem;"><i class="fas fa-shield-alt"></i> Safety Precautions</h4>
+                                <ul style="list-style: none; padding: 0; color: #333;">
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check-circle" style="color: #FFCC00;"></i> Monitor weather conditions closely</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check-circle" style="color: #FFCC00;"></i> Prepare emergency supplies</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check-circle" style="color: #FFCC00;"></i> Identify evacuation routes</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check-circle" style="color: #FFCC00;"></i> Stay informed via local alerts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% elif prediction == 2 %}
+                        <div class="risk-level low">
+                            <div class="icon-wrapper" style="font-size: 4rem; margin-bottom: 1rem;">
+                                <i class="fas fa-mountain" style="color: #00AEEF;"></i>
+                                <i class="fas fa-info-circle" style="color: #00AEEF; position: relative; left: -20px;"></i>
+                            </div>
+                            <h2>Low Risk</h2>
+                            <p class="safe">Monitor conditions</p>
+                            <p>Confidence Level: {{ "%.2f"|format(confidence) }}%</p>
+                            <h3>Confidence Graph</h3>
+                            <img src="{{ url_for('static', filename=graph_filename) }}" alt="Confidence Graph" style="max-width: 600px; margin: 1rem auto; display: block;">
+                            <div class="alert-box" style="background: #E6F7FD; border-left: 4px solid #00AEEF; padding: 1.5rem; margin-top: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #00AEEF; margin-bottom: 1rem;"><i class="fas fa-clipboard-check"></i> Recommendations</h4>
+                                <ul style="list-style: none; padding: 0; color: #333;">
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-eye" style="color: #00AEEF;"></i> Continue regular monitoring</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-eye" style="color: #00AEEF;"></i> Watch for changes in weather</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-eye" style="color: #00AEEF;"></i> Maintain awareness of surroundings</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-eye" style="color: #00AEEF;"></i> Keep emergency contacts handy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% elif prediction == 3 %}
+                        <div class="risk-level safe">
+                            <div class="icon-wrapper" style="font-size: 4rem; margin-bottom: 1rem;">
+                                <i class="fas fa-mountain" style="color: #2E8B57;"></i>
+                                <i class="fas fa-check-circle" style="color: #2E8B57; position: relative; left: -20px;"></i>
+                            </div>
+                            <h2>Safe Zone</h2>
+                            <p class="safe">No immediate risk detected</p>
+                            <p>Confidence Level: {{ "%.2f"|format(confidence) }}%</p>
+                            <h3>Confidence Graph</h3>
+                            <img src="{{ url_for('static', filename=graph_filename) }}" alt="Confidence Graph" style="max-width: 600px; margin: 1rem auto; display: block;">
+                            <div class="alert-box" style="background: #EAF7F0; border-left: 4px solid #2E8B57; padding: 1.5rem; margin-top: 1.5rem; border-radius: 8px;">
+                                <h4 style="color: #2E8B57; margin-bottom: 1rem;"><i class="fas fa-shield-alt"></i> Maintenance Guidelines</h4>
+                                <ul style="list-style: none; padding: 0; color: #333;">
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check" style="color: #2E8B57;"></i> Perform routine safety checks</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check" style="color: #2E8B57;"></i> Stay informed about local conditions</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check" style="color: #2E8B57;"></i> Maintain emergency preparedness</li>
+                                    <li style="margin: 0.5rem 0;"><i class="fas fa-check" style="color: #2E8B57;"></i> Regular environmental assessments</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="location-details">
+                        <h3><i class="fas fa-map-marker-alt"></i> Assessment Location</h3>
+                        <p class="location-text">{{ url }}</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --brand-brown: #5D473A;
+            --brand-red: #D72638;
+            --brand-green: #2E8B57;
+            --bg-light: #F5F5F5;
+            --text-dark: #333333;
+            --accent-yellow: #FFCC00;
+            --accent-blue: #00AEEF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background:  linear-gradient(135deg, rgba(93, 71, 58, 0.92), rgba(0, 174, 239, 0.88));
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .main-heading {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .results-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .risk-level {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .risk-level i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .high {
+            background: #FDECEE; /* light for #D72638 */
+            color: #D72638;
+        }
+
+        .moderate {
+            background: #FFF8E1; /* light for #FFCC00 */
+            color: #FFCC00;
+        }
+
+        .low {
+            background: #E6F7FD; /* light for #00AEEF */
+            color: #00AEEF;
+        }
+
+        .safe {
+            background: #EAF7F0; /* light for #2E8B57 */
+            color: #2E8B57;
+        }
+
+        .risk-level img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+        }
+
+        .gif1 {
+            max-width: 200px;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        .location-details {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .location-text {
+            word-break: break-all;
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        h2 {
+            margin: 1rem 0;
+        }
+
+        h3 {
+            color: #2d3436;
+            margin-bottom: 1rem;
+        }
+
+        .warning {
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .main-heading {
+                font-size: 2rem;
+            }
+
+            .results-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</body>
+</html>
